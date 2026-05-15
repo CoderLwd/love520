@@ -174,7 +174,7 @@
       margin-bottom: 40px;
     }
     .card {
-      height: 160px;
+      height: 120px;
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.8s;
@@ -294,19 +294,19 @@
     <!-- 情话翻转卡片 -->
     <div class="card-wrap">
       <div class="card">
-        <div class="card-front">情话一</div>
+        <div class="card-front">点我</div>
         <div class="card-back">山野千里，你是人间星光</div>
       </div>
       <div class="card">
-        <div class="card-front">情话二</div>
+        <div class="card-front">点我</div>
         <div class="card-back">岁岁年年，万喜万般宜</div>
       </div>
       <div class="card">
-        <div class="card-front">情话三</div>
+        <div class="card-front">点我</div>
         <div class="card-back">风吹十里，不如一直有你</div>
       </div>
       <div class="card">
-        <div class="card-front">情话四</div>
+        <div class="card-front">点我</div>
         <div class="card-back">愿余生朝朝暮暮都是你</div>
       </div>
     </div>
@@ -369,7 +369,7 @@
     // 2. 恋爱天数计时 【在这里改你们在一起的起始日期】
     function getLoveDays() {
       // 格式：年,月,日
-      const start = new Date(2017, 5, 20);
+      const start = new Date(2017, 4, 20);
       const now = new Date();
            const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
       document.getElementById("dayCount").innerText = diff;
@@ -409,7 +409,7 @@
         this.size = Math.random() * 10 + 8;
         this.speed = Math.random() * 2 + 1;
         this.opacity = Math.random() * 0.6 + 0.3;
-      }
+      }ddd
       draw() {
         ctx.fillStyle = `rgba(255,73,124,${this.opacity})`;
         ctx.beginPath();
