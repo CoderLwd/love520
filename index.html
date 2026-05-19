@@ -4,254 +4,383 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>520 专属礼物</title>
+  <!-- 引入好看的中文字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      /* 柔和配色方案 */
+      --primary-color: #ffb7b2; /* 柔和粉 */
+      --secondary-color: #ffdac1; /* 奶油橘 */
+      --accent-color: #e2f0cb; /* 淡绿 */
+      --text-main: #6d6d6d;
+      --text-highlight: #ff9aa2;
+      --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Microsoft Yahei", sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background: #fdf6f9;
+      background: #fff0f5; /* 薰衣草红 blush */
+      background-image: linear-gradient(to top, #fff0f5 0%, #ffe6fa 100%);
+      font-family: 'Noto Sans SC', sans-serif;
+      color: var(--text-main);
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* 开场开箱遮罩 */
+    h1, h2, h3, .hand-font {
+      font-family: 'Ma Shan Zheng', cursive;
+    }
+
+    /* --- 开场遮罩 --- */
     .unbox {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: #fff;
+      background: radial-gradient(circle, #fff5f7 0%, #ffe3e8 100%);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 1s ease;
+      transition: opacity 1s ease, visibility 1s;
       cursor: pointer;
     }
 
     .gift-box {
-      width: 160px;
-      height: 160px;
+      width: 150px;
+      height: 150px;
       position: relative;
-      /* 未点击待机动画 */
-      animation: breathe 2s infinite ease-in-out;
+      animation: breathe 3s infinite ease-in-out;
+      filter: drop-shadow(0 10px 15px rgba(255, 105, 180, 0.3));
     }
 
     .box-top {
-      width: 170px;
-      height: 50px;
-      background: #ff6b9d;
+      width: 160px;
+      height: 40px;
+      background: var(--primary-color);
       border-radius: 8px;
       position: absolute;
-      top: -25px;
+      top: -20px;
       left: -5px;
+      z-index: 2;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .box-body {
-      width: 160px;
+      width: 150px;
       height: 130px;
-      background: #ff497c;
+      background: #ff9aa2;
       border-radius: 8px;
       position: absolute;
       bottom: 0;
+      z-index: 1;
     }
 
     .ribbon {
       position: absolute;
       width: 20px;
-      height: 180px;
-      background: #ffe066;
+      height: 100%;
+      background: #fff;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 3;
+      opacity: 0.9;
+    }
+    
+    .ribbon-h {
+      position: absolute;
+      width: 100%;
+      height: 20px;
+      background: #fff;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      opacity: 0.9;
     }
 
     .click-tip {
-      position: absolute;
-      bottom: 100px;
-      font-size: 16px;
-      color: #ff497c;
-      animation: tipBlink 1.5s infinite;
+      margin-top: 40px;
+      font-size: 18px;
+      color: #ff9aa2;
+      letter-spacing: 2px;
+      animation: tipBlink 2s infinite;
+      font-family: 'Ma Shan Zheng', cursive;
     }
 
-    .hearts-burst {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #ff497c;
-      transform: rotate(45deg);
-    }
-    .heart::before,
-    .heart::after {
-      content: "";
-      width: 20px;
-      height: 20px;
-      background: #ff497c;
-      border-radius: 50%;
-      position: absolute;
-    }
-    .heart::before { top: -10px; left: 0; }
-    .heart::after { top: 0; left: -10px; }
-
-    /* 待机动画 */
-    @keyframes breathe {
-      0% { transform: scale(1) rotate(-2deg); }
-      50% { transform: scale(1.08) rotate(2deg); }
-      100% { transform: scale(1) rotate(-2deg); }
-    }
-    @keyframes tipBlink {
-      0%,100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
-    @keyframes boxOpen {
-      0% { top: -25px; }
-      100% { top: -100px; opacity: 0; }
-    }
-    @keyframes burst {
-      0% { transform: scale(0); opacity: 1; }
-      100% { transform: scale(1.4); opacity: 0; }
-    }
-    @keyframes fly {
-      to { transform: translateY(-600px) rotate(45deg); opacity: 0; }
-    }
-
-    /* 主内容 */
+    /* --- 主内容 --- */
     .content {
       display: none;
-      padding: 30px 20px;
-      max-width: 1000px;
+      padding: 40px 20px 80px;
+      max-width: 800px;
       margin: 0 auto;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 50px;
     }
 
     .title {
-      text-align: center;
-      font-size: 32px;
-      color: #ff497c;
-      margin: 20px 0 20px;
+      font-size: 42px;
+      color: #ff8fa3;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(255, 183, 178, 0.3);
     }
 
     .type-text {
-      text-align: center;
       font-size: 18px;
-      color: #666;
-      margin-bottom: 30px;
+      color: #888;
+      min-height: 24px; /* 防止抖动 */
+      line-height: 1.6;
     }
 
-    /* 恋爱倒计时 */
+    /* 恋爱倒计时 - 卡片风格 */
     .count-box {
-      background: #ffe8ef;
-      border-radius: 16px;
-      padding: 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      position: relative;
+      overflow: hidden;
     }
+    
+    .count-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
     .count-title {
-      color: #ff497c;
-      font-size: 18px;
-      margin-bottom: 10px;
+      color: #aaa;
+      font-size: 16px;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
     }
+    
     .count-num {
-      font-size: 28px;
-      color: #ff2e63;
+      font-size: 48px;
+      color: #ff8fa3;
       font-weight: bold;
+      font-family: 'Ma Shan Zheng', cursive;
+      margin: 10px 0;
     }
 
     /* 情话翻转卡片 */
     .card-wrap {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      margin-bottom: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-bottom: 50px;
     }
+    
     .card {
-      height: 120px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.8s;
+      height: 140px;
+      perspective: 1000px;
       cursor: pointer;
     }
+    
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .card.active .card-inner {
+      transform: rotateY(180deg);
+    }
+    
     .card-front, .card-back {
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: 12px;
       backface-visibility: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px;
-    }
-    .card-front {
-      background: #ff6b9d;
-      color: #fff;
+      padding: 15px;
+      border-radius: 16px;
       font-size: 16px;
+      line-height: 1.4;
     }
+    
+    .card-front {
+      background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%);
+      color: #fff;
+      font-weight: bold;
+    }
+    
     .card-back {
       background: #fff;
-      color: #ff497c;
+      color: #ff8fa3;
       transform: rotateY(180deg);
-      border: 1px solid #ffc8d8;
-      font-size: 14px;
-    }
-    .card.active {
-      transform: rotateY(180deg);
+      border: 2px solid #ffe3e8;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 18px;
     }
 
     /* 照片墙 */
     .photo-wall {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
     }
-    .photo {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: 0.3s;
+    
+    .photo-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.4s ease;
       opacity: 0;
       transform: translateY(30px);
+      background: #fff;
+      padding: 8px; /* 拍立得边框效果 */
       cursor: pointer;
     }
-    .photo:nth-child(n) { animation: fadeUp 1s calc(0.1s * var(--i)) forwards; }
-    .photo:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(255,73,124,0.25);
+    
+    .photo-item:nth-child(n) { 
+      animation: fadeUp 1s calc(0.1s * var(--i)) forwards; 
+    }
+    
+    .photo-item:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(255, 143, 163, 0.2);
+    }
+    
+    .photo {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      transition: all 0.4s ease;
     }
 
-    /* 图片灯箱放大 */
+    .photo:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(255, 143, 163, 0.2);
+    }
+
+    /* 灯箱 */
     .lightbox {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0,0,0,0.85);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(5px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 10000;
-      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
+    
+    .lightbox.show {
+      opacity: 1;
+    }
+    
     .lightbox img {
       max-width: 90%;
-      max-height: 90%;
+      max-height: 85vh;
       border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+    
+    .lightbox.show img {
+      transform: scale(1);
     }
 
-    /* 飘落爱心画布 */
-    .falling-hearts {
+    /* 音乐控制按钮 */
+    .music-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: transform 0.3s;
+      border: 2px solid #ffe3e8;
+    }
+    
+    .music-btn.playing {
+      animation: spin 4s linear infinite;
+    }
+    
+    .music-icon {
+      width: 24px;
+      height: 24px;
+      fill: #ff8fa3;
+    }
+
+    /* 点击产生的爱心 */
+    .click-heart {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 1s ease-out forwards;
+      font-size: 20px;
+      z-index: 9999;
+    }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes tipBlink {
+      0%, 100% { opacity: 0.6; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-5px); }
+    }
+    @keyframes boxOpen {
+      0% { top: -20px; opacity: 1; }
+      100% { top: -120px; opacity: 0; }
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+    }
+
+    canvas {
       position: fixed;
       top: 0;
       left: 0;
@@ -260,65 +389,88 @@
       pointer-events: none;
       z-index: -1;
     }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
   </style>
 </head>
 
 <body>
+  <!-- 背景音乐 (请替换 src 为你的音乐文件地址，例如 './love.mp3') -->
+  <audio id="bgMusic" loop>
+    <source src="https://music.163.com/song/media/outer/url?id=1824045033.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 音乐按钮 -->
+  <div class="music-btn" id="musicBtn" title="播放/暂停音乐">
+    <svg class="music-icon" viewBox="0 0 24 24">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    </svg>
+  </div>
+
   <!-- 开箱礼盒 -->
   <div class="unbox" id="unbox">
-    <div class="click-tip">💖 点击打开520礼物 💖</div>
     <div class="gift-box" id="giftBox">
       <div class="box-top" id="boxTop"></div>
-      <div class="box-body"></div>
-      <div class="ribbon"></div>
-      <div class="hearts-burst" id="burst"></div>
+      <div class="box-body">
+        <div class="ribbon"></div>
+        <div class="ribbon-h"></div>
+      </div>
     </div>
+    <div class="click-tip">💖 点击开启惊喜 💖</div>
   </div>
 
   <!-- 主内容页 -->
   <div class="content" id="content">
-    <h1 class="title">💌 520 快乐</h1>
-    <p class="type-text">何其有幸，年岁并进，往后余生皆是你 ✨</p>
+    <div class="header-section">
+      <h1 class="title">Happy 520</h1>
+      <p class="type-text" id="typewriter"></p>
+    </div>
 
-    <!-- 恋爱计时 改开始日期即可 -->
+    <!-- 恋爱计时 -->
     <div class="count-box">
-      <div class="count-title">我们在一起已经</div>
+      <div class="count-title">我们已经相爱</div>
       <div class="count-num" id="dayCount">0</div>
-      <div class="count-title">天</div>
+      <div class="count-title">天 · 每一秒都珍贵</div>
     </div>
 
     <!-- 情话翻转卡片 -->
     <div class="card-wrap">
       <div class="card">
-        <div class="card-front">点我</div>
-        <div class="card-back">山野千里，你是人间星光</div>
+        <div class="card-inner">
+          <div class="card-front">✨ 第一句</div>
+          <div class="card-back">山野千里<br>你是人间星光</div>
+        </div>
       </div>
       <div class="card">
-        <div class="card-front">点我</div>
-        <div class="card-back">岁岁年年，万喜万般宜</div>
+        <div class="card-inner">
+          <div class="card-front">🌸 第二句</div>
+          <div class="card-back">岁岁年年<br>万喜万般宜</div>
+        </div>
       </div>
       <div class="card">
-        <div class="card-front">点我</div>
-        <div class="card-back">风吹十里，不如一直有你</div>
+        <div class="card-inner">
+          <div class="card-front">🍃 第三句</div>
+          <div class="card-back">风吹十里<br>不如一直有你</div>
+        </div>
       </div>
       <div class="card">
-        <div class="card-front">点我</div>
-        <div class="card-back">愿余生朝朝暮暮都是你</div>
+        <div class="card-inner">
+          <div class="card-front">💌 第四句</div>
+          <div class="card-back">愿余生<br>朝朝暮暮都是你</div>
+        </div>
       </div>
     </div>
 
-    <!-- 照片墙 替换src为自己照片 -->
+    <!-- 照片墙 -->
     <div class="photo-wall">
-      <img src="https://picsum.photos/seed/love1/600/700" class="photo" style="--i:1">
-      <img src="https://picsum.photos/seed/love2/600/700" class="photo" style="--i:2">
-      <img src="https://picsum.photos/seed/love3/600/700" class="photo" style="--i:3">
-      <img src="https://picsum.photos/seed/love4/600/700" class="photo" style="--i:4">
-      <img src="https://picsum.photos/seed/love5/600/700" class="photo" style="--i:5">
-      <img src="https://picsum.photos/seed/love6/600/700" class="photo" style="--i:6">
+      <!-- 替换 src 为真实照片 -->
+      <div class="photo-item" style="--i:1"><img src="./resource/1.JPEG" class="photo"></div>
+      <div class="photo-item" style="--i:2"><img src="./resource/2.JPEG" class="photo"></div>
+      <div class="photo-item" style="--i:3"><img src="./resource/3.PNG" class="photo"></div>
+      <div class="photo-item" style="--i:4"><img src="./resource/4.JPEG" class="photo"></div>
+      <div class="photo-item" style="--i:5"><img src="./resource/5.JPEG" class="photo"></div>
+      <div class="photo-item" style="--i:6"><img src="./resource/6.JPEG" class="photo"></div>
+      <div class="photo-item" style="--i:7"><img src="./resource/7.PNG" class="photo"></div>
+      <div class="photo-item" style="--i:8"><img src="./resource/10.JPEG" class="photo"></div>
+      <div class="photo-item" style="--i:9"><img src="./resource/11.JPEG" class="photo"></div>
     </div>
   </div>
 
@@ -328,115 +480,173 @@
   </div>
 
   <!-- 背景飘落爱心 -->
-  <canvas class="falling-hearts" id="heartCanvas"></canvas>
+  <canvas id="heartCanvas"></canvas>
 
   <script>
-    // 1. 礼盒点击开箱逻辑
+    // 1. 开箱逻辑
     const unbox = document.getElementById("unbox");
     const giftBox = document.getElementById("giftBox");
     const boxTop = document.getElementById("boxTop");
-    const burst = document.getElementById("burst");
     const content = document.getElementById("content");
+    const bgMusic = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
     let opened = false;
 
     unbox.addEventListener("click", () => {
       if (opened) return;
       opened = true;
+      
+      // 尝试播放音乐
+      bgMusic.play().then(() => {
+        musicBtn.classList.add('playing');
+      }).catch(e => console.log("自动播放被拦截，需手动点击音乐按钮"));
+
       giftBox.style.animation = "none";
       boxTop.style.animation = "boxOpen 1s ease forwards";
 
       setTimeout(() => {
-        burst.style.animation = "burst 1.2s ease forwards";
-        for (let i = 0; i < 30; i++) {
-          const h = document.createElement("div");
-          h.className = "heart";
-          h.style.left = Math.random() * 100 + "%";
-          h.style.animation = `fly 2s ${Math.random() * 0.5}s ease infinite`;
-          h.style.transform = `rotate(${Math.random() * 360}deg)`;
-          burst.appendChild(h);
-        }
-      }, 800);
-
-      setTimeout(() => {
         unbox.style.opacity = "0";
+        unbox.style.visibility = "hidden";
+        content.style.display = "block";
+        
+        // 触发内容淡入
         setTimeout(() => {
-          unbox.style.display = "none";
-          content.style.display = "block";
-        }, 1000);
-      }, 1800);
+          content.style.opacity = "1";
+          startTypewriter(); // 开始打字效果
+        }, 100);
+      }, 1200);
     });
 
-    // 2. 恋爱天数计时 【在这里改你们在一起的起始日期】
+    // 2. 音乐控制
+    musicBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // 防止触发点击爱心
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicBtn.classList.add('playing');
+      } else {
+        bgMusic.pause();
+        musicBtn.classList.remove('playing');
+      }
+    });
+
+    // 3. 恋爱天数计算 【修改这里的日期】
     function getLoveDays() {
-      // 格式：年,月,日
-      const start = new Date(2017, 4, 20);
+      // 格式：年, 月(0-11), 日
+      const start = new Date(2017, 4, 20); 
       const now = new Date();
-           const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+      const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
       document.getElementById("dayCount").innerText = diff;
     }
     getLoveDays();
 
-    // 3. 翻转卡片点击
+    // 4. 打字机效果
+    function startTypewriter() {
+      const text = "何其有幸，年岁并进，往后余生皆是你 ✨";
+      const el = document.getElementById("typewriter");
+      let i = 0;
+      el.innerText = "";
+      function type() {
+        if (i < text.length) {
+          el.innerText += text.charAt(i);
+          i++;
+          setTimeout(type, 100);
+        }
+      }
+      type();
+    }
+
+    // 5. 卡片翻转
     document.querySelectorAll(".card").forEach(card => {
       card.addEventListener("click", () => {
         card.classList.toggle("active");
       });
     });
 
-    // 4. 照片灯箱放大
+    // 6. 照片灯箱
     const lightbox = document.getElementById("lightbox");
     const lightImg = document.getElementById("lightImg");
     document.querySelectorAll(".photo").forEach(img => {
       img.addEventListener("click", () => {
         lightImg.src = img.src;
         lightbox.style.display = "flex";
+        setTimeout(() => lightbox.classList.add('show'), 10);
       });
     });
     lightbox.addEventListener("click", () => {
-      lightbox.style.display = "none";
+      lightbox.classList.remove('show');
+      setTimeout(() => lightbox.style.display = "none", 300);
     });
 
-    // 5. 全屏飘落爱心
+    // 7. 点击屏幕产生爱心特效
+    document.addEventListener("click", (e) => {
+      // 排除掉卡片、照片、按钮等交互元素
+      if (e.target.closest('.card') || e.target.closest('.photo') || e.target.closest('.music-btn') || e.target.closest('.unbox')) return;
+      
+      const heart = document.createElement("div");
+      heart.className = "click-heart";
+      heart.innerHTML = ["❤️", "💖", "💕", "🌸"][Math.floor(Math.random() * 4)];
+      heart.style.left = e.clientX + "px";
+      heart.style.top = e.clientY + "px";
+      document.body.appendChild(heart);
+      
+      setTimeout(() => heart.remove(), 1000);
+    });
+
+    // 8. 背景 Canvas 爱心雨 (优化版)
     const canvas = document.getElementById("heartCanvas");
     const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
 
-    class Heart {
+    class HeartParticle {
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height - canvas.height;
-        this.size = Math.random() * 10 + 8;
-        this.speed = Math.random() * 2 + 1;
-        this.opacity = Math.random() * 0.6 + 0.3;
-      }ddd
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height - height;
+        this.size = Math.random() * 15 + 5;
+        this.speed = Math.random() * 1 + 0.5;
+        this.opacity = Math.random() * 0.5 + 0.1;
+        this.color = `rgba(255, ${150 + Math.random()*50}, ${180 + Math.random()*50}, ${this.opacity})`;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = (Math.random() - 0.5) * 2;
+      }
       draw() {
-        ctx.fillStyle = `rgba(255,73,124,${this.opacity})`;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
-        ctx.arc(this.x + this.size / 2, this.y, this.size / 2, 0, Math.PI * 2);
-        ctx.moveTo(this.x, this.y);
-        ctx.quadraticCurveTo(this.x + this.size / 2, this.y + this.size, this.x + this.size, this.y);
+        // 绘制心形路径
+        let s = this.size;
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-s/2, -s/2, -s, s/3, 0, s);
+        ctx.bezierCurveTo(s, s/3, s/2, -s/2, 0, 0);
         ctx.fill();
+        ctx.restore();
       }
       update() {
         this.y += this.speed;
-        if (this.y > canvas.height) this.y = -this.size;
+        this.rotation += this.rotationSpeed;
+        if (this.y > height + 50) this.reset();
       }
     }
 
-    const hearts = Array(60).fill().map(() => new Heart());
+    const particles = Array(40).fill().map(() => new HeartParticle());
+    
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      hearts.forEach(h => { h.draw(); h.update(); });
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => { p.draw(); p.update(); });
       requestAnimationFrame(animate);
     }
     animate();
-
-    window.onresize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
   </script>
 </body>
 </html>
